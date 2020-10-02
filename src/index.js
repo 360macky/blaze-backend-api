@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const app = express();
 const Customers = require('./api/models/Customers');
 const customersData = new Customers();
