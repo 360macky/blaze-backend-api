@@ -24,8 +24,6 @@ class Customers {
         console.log(`DB Connection Error: ${err.message}`);
       });
 
-    let database = [];
-
     mongoose.connection.on('open', function (ref) {
       console.log('Connected to mongo server.');
 
