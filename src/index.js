@@ -6,8 +6,8 @@ const customersData = new Customers();
 const port = process.env.PORT || 3000;
 require('dotenv').config();
 
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+app.use((request, response, next) => {
+  response.setHeader('Access-Control-Allow-Origin', '*');
   next();
 });
 
