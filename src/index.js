@@ -26,16 +26,6 @@ app.get('/api/update/customer', async (request, response) => {
   response.status(200).send(request.query);
 });
 
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
-  .then(() => {})
-  .catch((err) => {
-    console.log(`DB Connection Error: ${err.message}`);
-  });
-
 app.listen(port, () => {
   console.log('Listening');
 });
