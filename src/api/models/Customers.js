@@ -3,6 +3,9 @@ require('dotenv').config();
 
 const customerSchema = new mongoose.Schema({
   firstName: String,
+  lastName: String,
+  email: String,
+  phoneNumber: String,
 });
 
 const customerModel = mongoose.model('customer', customerSchema, 'customers');
@@ -44,10 +47,42 @@ class Customers {
     return customers;
   }
   async addCustomer(newCustomer) {
-    let customer;
+    let customer = customerModel(newCustomer);
+    console.log(customer);
+    customer
+      .save()
+      .then((doc) => {
+        console.log(doc);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
-  updateCustomer(customerId, customerData) {
-
+  updateCustomer(customerData) {
+    console.log(customerData);
+    customerModel
+      .findOneAndUpdate(
+        {
+          _id: customerData._id,
+        },
+        {
+          firstName: customerData.firstName,
+          lastName: customerData.lastName,
+          email: customerData.email,
+          phoneNumber: customerData.phoneNumber,
+        },
+        {
+          new: true,
+          runValidators: true,
+          useFindAndModify: false,
+        }
+      )
+      .then((doc) => {
+        console.log(doc);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 }
 

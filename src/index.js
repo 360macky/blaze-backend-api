@@ -6,7 +6,10 @@ const customersData = new Customers();
 const port = process.env.PORT || 3000;
 require('dotenv').config();
 
-// app.use(express.json());
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 app.get('/api/customers', async (request, response) => {
   let customers = await customersData.getCustomers();
@@ -14,23 +17,21 @@ app.get('/api/customers', async (request, response) => {
 });
 
 app.get('/api/add/customer', async (request, response) => {
-  // response.status(200).send(customersData.getCustomers());
+  let newResponse = await customersData.addCustomer(request.query);
+  response.status(200).send(request.query);
 });
 
 app.get('/api/update/customer', async (request, response) => {
-  // response.status(200).send(customersData.getCustomers());
+  let newResponse = await customersData.updateCustomer(request.query);
+  response.status(200).send(request.query);
 });
-
-// Call MongoDB using Customer class
 
 mongoose
   .connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
-  .then(() => {
-
-  })
+  .then(() => {})
   .catch((err) => {
     console.log(`DB Connection Error: ${err.message}`);
   });
